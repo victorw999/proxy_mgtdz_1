@@ -1,24 +1,27 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+// #1 code format
+const target_1 = {
+  msg: 'hooah'
+}
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const handler = {
+  get (target_1, prop, receiver){
+    return 'world'
+  }
+}
 
-setupCounter(document.querySelector('#counter'))
+const proxy_1 = new Proxy(target_1, handler)
+console.log('proxy_1.msg', proxy_1.msg)
+
+// #2 code format
+const wrap = obj => {
+  return new Proxy(obj, {
+    get(target, propKey) {
+        console.log(`Reading property "${propKey}"`)
+        return target[propKey]
+    }
+  })
+}
+const target_2 = { msg: 'feel that lether' }
+// const wrapped = wrap(target_2)
+const proxy_2 = wrap(target_2)
+console.log('proxy_2.msg', proxy_2.msg)
